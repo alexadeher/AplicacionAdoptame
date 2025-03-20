@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, Image, TouchableOpacity, TextInput, StyleSheet } from "react-native";
 
-const AdopterHomeScreen = ({ navigation }) => {
+const AdminHomeScreen = () => {
     const [mascotas, setMascotas] = useState([]);
-    const [favoritos, setFavoritos] = useState([]);
-    const [filtro, setFiltro] = useState("");
+    const [nombre, setNombre] = useState("");
+    const [tipo, setTipo] = useState("Perro");
+    const [imagen, setImagen] = useState("");
 
     useEffect(() => {
         fetchMascotas();
@@ -18,43 +19,58 @@ const AdopterHomeScreen = ({ navigation }) => {
             const catData = await catRes.json();
 
             setMascotas([
-                { id: 1, nombre: "Firulais", tipo: "Perro", raza: "Labrador", imagen: dogData.message },
-                { id: 2, nombre: "Michito", tipo: "Gato", raza: "Siames", imagen: catData[0].url },
+                { id: 1, nombre: "Firulais", tipo: "Perro", imagen: dogData.message },
+                { id: 2, nombre: "Michito", tipo: "Gato", imagen: catData[0].url },
             ]);
         } catch (error) {
-        console.error("Error al obtener mascotas", error);
+            console.error("Error al obtener mascotas", error);
         }
     };
 
-    const agregarAFavoritos = (mascota) => {
-        setFavoritos([...favoritos, mascota]);
+    const agregarMascota = () => {
+        if (!nombre || !imagen) return;
+        const nuevaMascota = { id: Date.now(), nombre, tipo, imagen };
+        setMascotas([...mascotas, nuevaMascota]);
+        setNombre("");
+        setImagen("");
+    };
+
+    const eliminarMascota = (id) => {
+        setMascotas(mascotas.filter((mascota) => mascota.id !== id));
     };
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Mascotas Disponibles</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Filtrar por raza o tamaño"
-                value={filtro}
-                onChangeText={setFiltro}
-            />
+            <Text style={styles.title}>Lista de Mascotas</Text>
             <FlatList
-                data={mascotas.filter((m) => m.raza.includes(filtro))}
+                data={mascotas}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
                 <View style={styles.card}>
                     <Image source={{ uri: item.imagen }} style={styles.image} />
-                    <Text>{item.nombre} ({item.raza})</Text>
-                    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Detalles", { mascota: item })}>
-                        <Text style={styles.buttonText}>Ver Detalles</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonFav} onPress={() => agregarAFavoritos(item)}>
-                        <Text style={styles.buttonText}>Agregar a Favoritos</Text>
+                    <Text>{item.nombre} ({item.tipo})</Text>
+                    <TouchableOpacity style={styles.buttonDelete} onPress={() => eliminarMascota(item.id)}>
+                        <Text style={styles.buttonText}>Eliminar</Text>
                     </TouchableOpacity>
                 </View>
                 )}
             />
+            <Text style={styles.subtitle}>Agregar nueva mascota</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Nombre de la mascota"
+                value={nombre}
+                onChangeText={setNombre}
+            />
+            <TextInput
+                style={styles.input}
+                placeholder="URL de imagen"
+                value={imagen}
+                onChangeText={setImagen}
+            />
+            <TouchableOpacity style={styles.buttonAdd} onPress={agregarMascota}>
+                <Text style={styles.buttonText}>Agregar Mascota</Text>
+            </TouchableOpacity>
         </View>
     );
 };
@@ -75,15 +91,20 @@ const styles = StyleSheet.create({
         padding: 10, 
         backgroundColor: "#FFFFFF", 
         marginVertical: 5, 
-        borderRadius: 5, 
-        alignItems: "center" 
+        borderRadius: 5 
     },
     image: { 
         width: 100, 
         height: 100, 
         borderRadius: 10 
     },
-    input: { 
+    subtitle: { 
+        fontSize: 22, 
+        color: "#82C0CC",
+        fontWeight: "bold", 
+        marginBottom: 10 
+    },
+    input: {
         height: 50,
         borderWidth: 1,
         borderColor: "#ccc",
@@ -99,21 +120,19 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 3, 
     },
-    button: { 
-        marginTop: 10, 
-        backgroundColor: "#16697A", 
-        padding: 10, 
-        borderRadius: 5, 
-        alignItems: "center", 
-        width: "80%" 
-    },
-    buttonFav: { 
+    buttonAdd: { 
         marginTop: 10, 
         backgroundColor: "#FFAE3E", 
         padding: 10, 
         borderRadius: 5, 
-        alignItems: "center", 
-        width: "80%" 
+        alignItems: "center" 
+    },
+    buttonDelete: { 
+        marginTop: 10, 
+        backgroundColor: "#16697A", 
+        padding: 10, 
+        borderRadius: 5, 
+        alignItems: "center" 
     },
     buttonText: { 
         color: "#FFFFFF", 
@@ -121,4 +140,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default AdopterHomeScreen;
+export default AdminHomeScreen;

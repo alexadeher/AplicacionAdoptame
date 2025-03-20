@@ -3,6 +3,9 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import CustomAppBar from "../components/CustomAppBar";
 import AdopterHomeScreen from "../screens/AdopterHomeScreen";
+import AdopterDetailsScreen from "../screens/AdopterDetailsScreen";
+import AdopterHighlightScreen from "../screens/AdopterHighlightScreen";
+import AdopterProfileScreen from "../screens/AdopterProfileScreen";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -56,9 +59,9 @@ function ProfileStack() {
 // Menú lateral
 export default function CustomerNavigator() {
     return (
-        <Drawer.Navigator screenOptions={{ headerShown: false, drawerActiveTintColor: "#764C89" }}>
+        <Drawer.Navigator screenOptions={{ headerShown: false, drawerActiveTintColor: "#82C0CC" }}>
         <Drawer.Screen name="Adopter" component={AdopterStack} options={{ title: "Inicio" }} />
-        <Drawer.Screen name="Highlight" component={HighlightStack} options={{ title: "Carrito" }} />
+        <Drawer.Screen name="Highlight" component={HighlightStack} options={{ title: "Favoritos" }} />
         <Drawer.Screen name="Profile" component={ProfileStack} options={{ title: "Perfil" }} />
         </Drawer.Navigator>
     );

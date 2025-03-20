@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     textInput: {
-        color: '#16697A',
+        color: '#FFFFFF',
         fontSize: 16,
         alignSelf: 'flex-start',
         marginBottom: 5,
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     buttonText: {
-        color: '#EDE7E3',
+        color: '#FFFFFF',
         fontSize: 16,
         fontWeight: 'bold',
     },

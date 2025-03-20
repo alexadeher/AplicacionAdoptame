@@ -36,7 +36,7 @@ const AdopterProfileScreen = () => {
         <ScrollView contentContainerStyle={styles.scrollContainer}>
             <View style={[styles.container, { backgroundColor: theme.background }]}>
                 <View style={styles.header}>
-                    <Text style={styles.title}>Usuario</Text>
+                    <Text style={styles.title}>Adoptante</Text>
                     <TouchableOpacity onPress={toggleTheme}>
                         <Feather name="moon" size={24} color={theme.textColor} />
                     </TouchableOpacity>
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 15,
         textAlign: 'center',
-        color: '#4A306D'
+        color: '#FFA62B'
     },
     profileImage: {
         width: 100,
@@ -135,11 +135,11 @@ const styles = StyleSheet.create({
     },
     icon: {
         fontSize: 22,
-        color: '#BA92B9',
+        color: '#489FB5',
         marginRight: 10,
     },
     button: {
-        backgroundColor: '#E8D7F1',
+        backgroundColor: '#16697A',
         padding: 12,
         borderRadius: 8,
         marginTop: 20,
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     buttonText: {
-        color: '#764C89',
+        color: '#FFFFFF',
         fontSize: 16,
         fontWeight: 'bold',
     }
